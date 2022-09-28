@@ -18,6 +18,26 @@ monthly_challenges={
 }
 
 # Create your views here.
+def index(request):
+    list_items=""
+    months=list(monthly_challenges.keys())
+    for month in months:
+        cap_month=month.capitalize()
+        month_path=reverse("month-challenge",args=[month])
+        list_items+= f"<li><a href=\"{month_path}\">{cap_month}</a></li>"
+    response_data=f"""
+    <h1>
+    <ul>
+        {list_items}
+    </ul>
+    </h1>
+    """
+    return HttpResponse(response_data)
+
+
+
+
+
 def monthly_by_num(request,month):
     months=list(monthly_challenges.keys())
     if(month>len(months)):
@@ -29,9 +49,10 @@ def monthly_by_num(request,month):
 def monthly_challenge(request,month):
     try:
         text=monthly_challenges[month]
-        return HttpResponse(text)
+        response_data=f"<h1>{text}</h1>"
+        return HttpResponse(response_data)
     except:
-        return HttpResponseNotFound("Not found")
+        return HttpResponseNotFound("<h1>Not found</h1>")
    
 
     
