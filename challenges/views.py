@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound,HttpResponseRedirect
+from django.http import Http404, HttpResponseNotFound,HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
@@ -40,7 +40,7 @@ def monthly_challenge(request,month):
             "month_name":month,
             })
     except:
-        return HttpResponseNotFound("<h1>Not found</h1>")
+        raise Http404() #Best way to render 404 looks for 404 in the templates folder in root.
    
 
     
